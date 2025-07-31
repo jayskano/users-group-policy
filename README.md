@@ -117,7 +117,7 @@ This project demonstrates how I created Group Policy Objects and managed account
 </p>
 <p>
 
-  - Back in DC-1, I located the user "bib.tel" and navigated to the password reset settings to ensure I understood where to apply changes if needed in a real scenario.
+  - Back in DC-1, I located the user "bib.tel" and navigated to the Reset Password window in Actice Directory Users and Computers, confirming where password changes could be applied if needed after an account lockout.
 
 </p>
 <br />
@@ -127,7 +127,7 @@ This project demonstrates how I created Group Policy Objects and managed account
 </p>
 <p>
 
-   - To finish the project, I went back into Client-1 as jane_admin and opened the Event Viewer.
-   - From there, I was able to view the security logs showing the failed login attempts from the user "bib.tel".
+   - Lastly, I logged back into Client-1 as jane_admin and opened the Event Viewer to inspect Security logs for evidence of the failed login attempts triggered by the account lockout.
+   - I confirmed that the account lockout events were properly logged and would be available for auditing or incident investigation.
 
 
