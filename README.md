@@ -19,15 +19,15 @@ This project demonstrates how I created Group Policy Objects and managed account
 - Windows 10 (22H2)
 
 <h2>Walkthrough</h2>
-
+<h3> Section 1: Accessing the Group Policy Management Console </h3>
 <p>
 <img src="https://github.com/user-attachments/assets/81e4d9b1-ebdb-4524-9052-cb786d4325c8" />
 </p>
 <p>
 
-  - To begin the project, I logged into DC-1 as jane_admin (mydomain.com\jane_admin).
-  - Once logged, I right-clicked the start menu and selected "Run".
-  - I entered "gpmc.msc" to open the Group Policy Management Console.
+  - To begin the project, I logged into DC-1 as the domain admin (jane_admin) to begin the Group policy configuration process.
+  - I accessed the Run dialog and entered "gpmc.msc" to launch the Group Policy Management Console.
+  - The Group Policy Management Console allows centralized management of Group Policy Objects (GPOs) across the domain.
 
 </p>
 <br />
@@ -37,18 +37,19 @@ This project demonstrates how I created Group Policy Objects and managed account
 </p>
 <p>
 
-  - Under mydomain.com, I right-clicked the "Default Domain Policy" and selected "Edit".
-  - This opened the Group Policy Management Editor.
+  - Inside of the console, I accessed the Defaut Domain Poilicy under mydomain.com to begin configuring Group Policies at the domain level.
 
 </p>
 <br />
 
+<h3> Section 2: Configuring Account Lockout Policy </h3>
 <p>
 <img src="https://github.com/user-attachments/assets/5649c4ab-2135-4807-b625-210fe8753d95" width=800
 </p>
 <p>
 
-  - Once there, I navigated to the "Account Lockout Policy" section.
+  - Once inside of the Group Policy Editor, I navigated to the "Account Lockout Policy" settings to begin configuring security measures related to failed login attempts.
+  - This section allows administrators to define how many failed login attempts are permitted before a user account is locked, enhanicng security against brute-force attacks.
 
 </p>
 <br />
@@ -58,19 +59,22 @@ This project demonstrates how I created Group Policy Objects and managed account
 </p>
 <p>
 
-  - For the "Account Lockout Duration", I set the time to 30 minutes.
-  - For the "Account Lockout Threshold", I set the login attempts to 5.
-  - This means that the user's account will be locked after 5 failed login attempts and can't be used for 30 minutes (unless an admin manually unlocks it).
+  - I set "Account Lockout Duration" to 30 minutes, restricting access after repeated failures.
+  - Accounts only be accessed before the lockout period ends if manually unlocked by an administrator.
+  - I set Account Lockout Threshold to 5 attempts, locking the account after five invalid login attempts.
+  - Other settings, such as Administrator Account Lockout and Reset Counter Time were left at their default values.
+ 
 
 </p>
 <br />
 
+<h3> Section 3: Testing the Account Lockout Policy with a User Account </h3>
 <p>
 <img src="https://github.com/user-attachments/assets/ee6edd4b-46a8-412c-b03d-ec13f19be9af" width=800/>
 </p>
 <p>
 
-  - After applying the settings, I went back into DC-1 as jane_admin and selected a random user (bib.tel) in Active Directory to test the new Group Policy settings.
+  - After applying the settings, I logged back into DC-1 as jane_admin and selected a random test user (bib.tel) in Active Directory Users and Computers to verify that the Group Policy was applied successfully.
 
 </p>
 <br />
@@ -80,8 +84,8 @@ This project demonstrates how I created Group Policy Objects and managed account
 </p>
 <p>
 
-  - Next, I attempted to log into Client-1 as "bib.tel" 5 times with an invalid password.
-  - After 5 unsuccessful login attempts, the user account (bib.tel) was locked.
+  - Next, I attempted to log into Client-1 as "bib.tel" using an invalid password five times.
+  - After the 5th failed attempt, the user account (bib.tel) was successfully locked, as expected.
 
 </p>
 <br />
@@ -91,9 +95,9 @@ This project demonstrates how I created Group Policy Objects and managed account
 </p>
 <p>
 
-  - After locking the account, I went back into DC-1 as jane_admin and navigated to Active Directory Users and Computers
-  - From there, I located the user "bib.tel" and navigated to the "Account" tab where I unlocked the account.
-
+  - After the account was locked, I returned to DC-1 as jane_admin and opened Active Directory Users and Computers
+  - Navigated to the Account tab for the user "bib.tel".
+  - Confirmed the account was marked as locked and manually unlocked it by checking the "Unlock Account" option.
 </p>
 <br />
 
@@ -103,7 +107,7 @@ This project demonstrates how I created Group Policy Objects and managed account
 <p>
 
   - After unlocking the account, I was able to successfully login to Client-1 as "bib.tel".
-  - I went into Powershell and entered "whoami" to confirm that the account was unlocked.
+  - I opened Powershell and entered "whoami" to confirm that the account was authenticated and fully restored.
 
 </p>
 <br />
